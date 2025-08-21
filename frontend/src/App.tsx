@@ -11,6 +11,12 @@ import ProfilePage from './pages/ProfilePage';
 import EmailVerificationPage from './pages/EmailVerificationPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
+import DashboardPage from './pages/DashboardPage';
+import AddCourtPage from './pages/AddCourtPage';
+import CourtsPage from './pages/CourtsPage';
+import UserBookingsPage from './pages/UserBookingsPage';
+import OwnerBookingsPage from './pages/OwnerBookingsPage';
+import AdminPanelPage from './pages/AdminPanelPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function AppContent() {
@@ -30,22 +36,51 @@ function AppContent() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/verify-email" element={<EmailVerificationPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/courts" element={<CourtsPage />} />
+          
+          {/* Protected Routes */}
           <Route path="/dashboard" element={
             <ProtectedRoute>
-              <div className="p-8">
-                <h1 className="text-3xl font-bold text-qc-text">Dashboard</h1>
-                <p className="text-gray-600 mt-2">Welcome to your QuickCourt dashboard!</p>
-              </div>
+              <DashboardPage />
             </ProtectedRoute>
           } />
+          
           <Route path="/profile" element={
             <ProtectedRoute>
               <ProfilePage />
             </ProtectedRoute>
           } />
-          <Route path="/verify-email" element={<EmailVerificationPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          
+          <Route path="/bookings" element={
+            <ProtectedRoute>
+              <UserBookingsPage />
+            </ProtectedRoute>
+          } />
+          
+          {/* Owner-specific Routes */}
+          <Route path="/owner/add-court" element={
+            <ProtectedRoute>
+              <AddCourtPage />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/owner/bookings" element={
+            <ProtectedRoute>
+              <OwnerBookingsPage />
+            </ProtectedRoute>
+          } />
+          
+          {/* Admin-specific Routes */}
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <AdminPanelPage />
+            </ProtectedRoute>
+          } />
+          
+          {/* Catch all route */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

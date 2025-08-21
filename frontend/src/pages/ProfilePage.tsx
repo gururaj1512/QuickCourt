@@ -26,6 +26,7 @@ import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import ImageUpload from '../components/ui/ImageUpload';
+import DashboardSidebar from '../components/DashboardSidebar';
 
 // Validation schemas
 const profileSchema = yup.object({
@@ -62,6 +63,7 @@ const ProfilePage = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const profileForm = useForm<ProfileFormData>({
     resolver: yupResolver(profileSchema),
@@ -183,31 +185,40 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-qc-bg py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
-          <Link
-            to="/dashboard"
-            className="inline-flex items-center text-qc-text hover:text-qc-primary transition-colors mb-6"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Dashboard
-          </Link>
-          
+    <div className="min-h-screen bg-qc-bg flex">
+      <DashboardSidebar 
+        isOpen={sidebarOpen} 
+        onToggle={() => setSidebarOpen(!sidebarOpen)} 
+      />
+
+      <div className="flex-1 flex flex-col lg:ml-0">
+        <div className="lg:hidden bg-white border-b border-gray-200 p-4">
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="p-2 text-gray-600 hover:text-gray-900"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <h1 className="text-lg font-semibold text-qc-text">Profile Settings</h1>
+            <div className="w-10"></div>
+          </div>
+        </div>
+
+        <div className="hidden lg:block bg-white border-b border-gray-200 p-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-qc-text">Profile Settings</h1>
-              <p className="text-gray-600 mt-2">Manage your account information and preferences</p>
+              <p className="text-gray-600 mt-1">Manage your account information and preferences</p>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="p-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid lg:grid-cols-3 gap-8">
           {/* Profile Information */}
           <div className="lg:col-span-2 space-y-6">
             {/* Profile Card */}
@@ -527,8 +538,10 @@ const ProfilePage = () => {
                 </Link>
               </div>
             </Card>
+            </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

@@ -38,7 +38,7 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/dashboard" className="flex items-center space-x-2">
             <motion.div 
               className="w-8 h-8 bg-qc-primary rounded-lg flex items-center justify-center"
               whileHover={{ scale: 1.1 }}
@@ -51,6 +51,12 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
+            <Link
+              to="/courts"
+              className="text-qc-text hover:text-qc-primary transition-colors font-medium"
+            >
+              Find Courts
+            </Link>
             <div className="relative">
               <input
                 type="text"

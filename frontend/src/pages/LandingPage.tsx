@@ -98,14 +98,14 @@ const LandingPage = () => {
                 className="flex flex-col sm:flex-row gap-4"
                 variants={itemVariants}
               >
-                <Link to="/search">
+                <Link to="/courts">
                   <Button size="lg" className="w-full sm:w-auto">
                     <MapPin className="w-5 h-5 mr-2" />
                     Find a Court
                   </Button>
                 </Link>
                 
-                <Link to="/dashboard">
+                <Link to="/signup">
                   <Button variant="outline" size="lg" className="w-full sm:w-auto">
                     <Users className="w-5 h-5 mr-2" />
                     Host a Court

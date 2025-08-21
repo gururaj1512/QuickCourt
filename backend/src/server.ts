@@ -11,6 +11,8 @@ import connectDB from './config/database';
 import { notFound, errorHandler } from './middleware/error';
 
 import auth from './routes/auth';
+import courts from './routes/courts';
+import bookings from './routes/bookings';
 
 
 dotenv.config();
@@ -44,6 +46,8 @@ if (process.env.NODE_ENV === 'development') {
 };
 
 app.use('/api/auth', auth);
+app.use('/api/courts', courts);
+app.use('/api/bookings', bookings);
 
 app.use(notFound);
 app.use(errorHandler);
