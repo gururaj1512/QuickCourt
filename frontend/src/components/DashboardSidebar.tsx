@@ -47,7 +47,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ isOpen, onToggle })
     {
       label: 'Dashboard',
       icon: Home,
-      path: '/dashboard',
+      path: user?.role === 'Admin' ? '/admin/dashboard' : user?.role === 'Owner' ? '/owner/dashboard' : '/dashboard',
       description: 'Overview and analytics'
     },
     {

@@ -42,11 +42,9 @@ const AdminPanelPage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    if (user?.role !== 'Admin') {
-      window.location.href = '/dashboard';
-      return;
+    if (user) {
+      fetchPendingCourts();
     }
-    fetchPendingCourts();
   }, [user]);
 
   const fetchPendingCourts = async () => {
@@ -57,7 +55,7 @@ const AdminPanelPage = () => {
       const response = await courtAPI.getCourtsForApproval();
       
       if (response.success && response.courts) {
-        setPendingCourts(response.courts);
+        setPendingCourts(response.courts as unknown as Court[]);
       } else {
         setError(response.error || 'Failed to fetch pending courts');
       }
@@ -72,7 +70,8 @@ const AdminPanelPage = () => {
   const handleApproveCourt = async (courtId: string) => {
     try {
       const response = await courtAPI.approveRejectCourt(courtId, { 
-        approvalStatus: 'approved'
+        approvalStatus: 'approved',
+        status: 'active'
       });
       
       if (response.success) {
@@ -93,6 +92,7 @@ const AdminPanelPage = () => {
     try {
       const response = await courtAPI.approveRejectCourt(courtId, { 
         approvalStatus: 'rejected',
+        status: 'inactive',
         rejectionReason: reason
       });
       
@@ -115,17 +115,7 @@ const AdminPanelPage = () => {
     });
   };
 
-  if (user?.role !== 'Admin') {
-    return (
-      <div className="min-h-screen bg-qc-bg flex items-center justify-center">
-        <div className="text-center">
-          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-qc-text mb-2">Access Denied</h1>
-          <p className="text-gray-600">Only administrators can access this page.</p>
-        </div>
-      </div>
-    );
-  }
+
 
   if (isLoading) {
     return (

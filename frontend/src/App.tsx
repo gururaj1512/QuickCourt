@@ -12,12 +12,15 @@ import EmailVerificationPage from './pages/EmailVerificationPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import DashboardPage from './pages/DashboardPage';
+import OwnerDashboardPage from './pages/OwnerDashboardPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
 import AddCourtPage from './pages/AddCourtPage';
 import CourtsPage from './pages/CourtsPage';
 import UserBookingsPage from './pages/UserBookingsPage';
 import OwnerBookingsPage from './pages/OwnerBookingsPage';
 import AdminPanelPage from './pages/AdminPanelPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import RoleProtectedRoute from './components/RoleProtectedRoute';
 
 function AppContent() {
   useEffect(() => {
@@ -43,9 +46,21 @@ function AppContent() {
           
           {/* Protected Routes */}
           <Route path="/dashboard" element={
-            <ProtectedRoute>
+            <RoleProtectedRoute allowedRoles={['User']} fallbackPath="/dashboard">
               <DashboardPage />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
+          } />
+          
+          <Route path="/owner/dashboard" element={
+            <RoleProtectedRoute allowedRoles={['Owner']} fallbackPath="/owner/dashboard">
+              <OwnerDashboardPage />
+            </RoleProtectedRoute>
+          } />
+          
+          <Route path="/admin/dashboard" element={
+            <RoleProtectedRoute allowedRoles={['Admin']} fallbackPath="/admin/dashboard">
+              <AdminDashboardPage />
+            </RoleProtectedRoute>
           } />
           
           <Route path="/profile" element={
@@ -62,22 +77,22 @@ function AppContent() {
           
           {/* Owner-specific Routes */}
           <Route path="/owner/add-court" element={
-            <ProtectedRoute>
+            <RoleProtectedRoute allowedRoles={['Owner']} fallbackPath="/owner/dashboard">
               <AddCourtPage />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           } />
           
           <Route path="/owner/bookings" element={
-            <ProtectedRoute>
+            <RoleProtectedRoute allowedRoles={['Owner']} fallbackPath="/owner/dashboard">
               <OwnerBookingsPage />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           } />
           
           {/* Admin-specific Routes */}
           <Route path="/admin" element={
-            <ProtectedRoute>
+            <RoleProtectedRoute allowedRoles={['Admin']} fallbackPath="/admin/dashboard">
               <AdminPanelPage />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           } />
           
           {/* Catch all route */}

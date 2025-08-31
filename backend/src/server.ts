@@ -13,6 +13,7 @@ import { notFound, errorHandler } from './middleware/error';
 import auth from './routes/auth';
 import courts from './routes/courts';
 import bookings from './routes/bookings';
+import admin from './routes/admin';
 
 
 dotenv.config();
@@ -48,6 +49,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api/auth', auth);
 app.use('/api/courts', courts);
 app.use('/api/bookings', bookings);
+app.use('/api/admin', admin);
 
 app.use(notFound);
 app.use(errorHandler);

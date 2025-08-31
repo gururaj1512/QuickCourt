@@ -51,11 +51,9 @@ const OwnerBookingsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    if (user?.role !== 'Owner') {
-      window.location.href = '/dashboard';
-      return;
+    if (user) {
+      fetchBookings();
     }
-    fetchBookings();
   }, [user]);
 
   const fetchBookings = async () => {
